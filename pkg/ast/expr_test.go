@@ -20,7 +20,7 @@ import (
 	"testing"
 )
 
-func replaceByStr(likestr string) (*regexp.Regexp, error) {
+func compileByReplaceAll(likestr string) (*regexp.Regexp, error) {
 	likestr = strings.ReplaceAll(strings.ReplaceAll(likestr, `\%`, `!@#`), `\_`, `!@$`)
 	regstr := strings.ReplaceAll(strings.ReplaceAll(likestr, "%", ".*"), "_", ".")
 	regstr = strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(regstr, `!@$`, `\_`), `!@#`, `\%`), `\`, `\\`)
@@ -33,7 +33,7 @@ func TestLikePatternCompile(t *testing.T) {
 		`%`, `_`, `\`, `\\`, `\%`, `\_`, `\\%`, `\\_`, `%\\%`, `%\\_`, `%\\%\\%`, `%\\%\\_`, `%\\%\\%`, `%\\%\\_`,
 	}
 	for i, test := range tests {
-		expect, err := replaceByStr(test)
+		expect, err := compileByReplaceAll(test)
 		if err != nil {
 			panic(err)
 		}
